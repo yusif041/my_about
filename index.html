@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xalida Salahova | Official Live Portfolio</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #0f172a;
+            --card-bg: rgba(30, 41, 59, 0.7);
+            --accent-gradient: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --input-bg: rgba(15, 23, 42, 0.6);
+            --border-color: rgba(255, 255, 255, 0.1);
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-primary);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Ambient Glow Backgrounds */
+        .bg-glow {
+            position: fixed;
+            width: 450px;
+            height: 450px;
+            border-radius: 50%;
+            background: var(--accent-gradient);
+            filter: blur(140px);
+            opacity: 0.25;
+            z-index: -1;
+            animation: floatGlow 10s infinite alternate ease-in-out;
+        }
+        .bg-glow-1 { top: -120px; left: -120px; }
+        .bg-glow-2 { bottom: -120px; right: -120px; animation-delay: -5s; }
+
+        @keyframes floatGlow {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(60px, 60px) scale(1.1); }
+        }
+
+        .wrapper { max-width: 1200px; width: 90%; margin: 40px auto; }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 16px 24px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(12px);
+            margin-bottom: 40px;
+        }
+
+        .brand-logo {
+            font-size: 1.25rem;
+            font-weight: 700;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        header { text-align: center; margin-bottom: 40px; }
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            background: var(--accent-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 12px;
+        }
+
+        .subtitle { font-size: 1.1rem; color: var(--text-secondary); max-width: 650px; margin: 0 auto; }
+
+        .btn {
+            padding: 10px 22px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .btn-primary { background: var(--accent-gradient); color: #fff; box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3); }
+        .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 25px rgba(56, 189, 248, 0.5); }
+        .btn-secondary { background: rgba(255, 255, 255, 0.05); color: var(--text-primary); border: 1px solid var(--border-color); }
+        .btn-secondary:hover { background: rgba(255, 255, 255, 0.12); }
+
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        .portfolio-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+
+        .project-card {
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            backdrop-filter: blur(12px);
+            overflow: hidden;
+            transition: all 0.4s ease;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .project-card:hover { transform: translateY(-8px); border-color: rgba(56, 189, 248, 0.4); }
+        .card-preview { width: 100%; height: 240px; object-fit: cover; background: #1e293b; }
+        .card-info { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .card-info h3 { font-size: 1.2rem; margin-bottom: 8px; }
+        .card-info p { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 12px; }
+        .card-meta { font-size: 0.8rem; color: #38bdf8; font-weight: 600; }
+
+        /* Public Inquiries Section */
+        .inquiry-section {
+            margin-top: 60px;
+            background: var(--card-bg);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            padding: 30px;
+            backdrop-filter: blur(12px);
+        }
+
+        .inquiry-box { margin-bottom: 20px; padding: 16px; background: rgba(15, 23, 42, 0.5); border-radius: 10px; border: 1px solid var(--border-color); }
+        .inquiry-box strong { color: #38bdf8; }
+        .inquiry-box p { font-size: 0.95rem; margin-top: 6px; }
+
+        /* Modals */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(15, 23, 42, 0.85); backdrop-filter: blur(8px);
+            display: flex; justify-content: center; align-items: center; z-index: 1000;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active { opacity: 1; pointer-events: auto; }
+        .modal-box { background: #1e293b; border: 1px solid var(--border-color); border-radius: 20px; width: 100%; max-width: 450px; padding: 32px; }
+        .form-group { margin-bottom: 16px; }
+        .form-group label { display: block; font-size: 0.85rem; color: var(--text-secondary); margin-bottom: 6px; }
+        .form-group input, .form-group textarea {
+            width: 100%; padding: 12px 16px; border-radius: 10px; background: var(--input-bg);
+            border: 1px solid var(--border-color); color: var(--text-primary); outline: none;
+        }
+        .modal-actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 20px; }
+    </style>
+</head>
+<body>
+
+    <div class="bg-glow bg-glow-1"></div>
+    <div class="bg-glow bg-glow-2"></div>
+
+    <div class="wrapper">
+        <nav>
+            <div class="brand-logo">Xalida Salahova</div>
+            <div id="user-status">
+                <button class="btn btn-primary" onclick="openAuthModal()">Owner Sign In</button>
+            </div>
+        </nav>
+
+        <header>
+            <h1>UI/UX & Graphic Portfolio</h1>
+            <p class="subtitle">Official online showcase for Xalida Salahova. View creative work or submit questions directly below.</p>
+        </header>
+
+        <section>
+            <div class="section-header">
+                <h2>Featured Projects</h2>
+                <button class="btn btn-primary" id="add-proj-btn" style="display: none;" onclick="openProjectModal()">+ Add New Project</button>
+            </div>
+            <div class="portfolio-grid" id="portfolio-grid">
+                <!-- Projects load live from Firebase -->
+            </div>
+        </section>
+
+        <!-- Public Q&A Board -->
+        <section class="inquiry-section">
+            <h2 style="margin-bottom: 16px;">Ask Khalida Anything</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 20px;">Send a message directly to <strong>khalidasalahova3@gmail.com</strong> through this public board:</p>
+            
+            <form onsubmit="submitPublicInquiry(event)" style="margin-bottom: 30px;">
+                <div class="form-group">
+                    <input type="text" id="ask-name" placeholder="Your Name" required>
+                </div>
+                <div class="form-group">
+                    <textarea id="ask-message" rows="3" placeholder="Write your question or request here..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Send Question</button>
+            </form>
+
+            <div id="inquiries-list">
+                <!-- Messages load dynamically -->
+            </div>
+        </section>
+    </div>
+
+    <!-- Owner Login Modal -->
+    <div class="modal-overlay" id="auth-modal">
+        <div class="modal-box">
+            <h2>Khalida's Admin Access</h2>
+            <form onsubmit="handleAuthSubmit(event)">
+                <div class="form-group">
+                    <label>Gmail Address</label>
+                    <input type="email" id="auth-email" value="khalidasalahova3@gmail.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Password</label>
+                    <input type="password" id="auth-password" placeholder="••••••••" required>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeAuthModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Log In / Setup Account</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Add Project Modal -->
+    <div class="modal-overlay" id="project-modal">
+        <div class="modal-box">
+            <h2>Add Project Picture</h2>
+            <form onsubmit="handleProjectSubmit(event)">
+                <div class="form-group">
+                    <label>Project Title</label>
+                    <input type="text" id="proj-title" placeholder="e.g. Modern Mobile UI" required>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea id="proj-desc" rows="3" placeholder="Project details..." required></textarea>
+                </div>
+                <div class="form-group">
+                    <label>Image Direct Link / URL</label>
+                    <input type="url" id="proj-url" placeholder="https://..." required>
+                </div>
+                <div class="modal-actions">
+                    <button type="button" class="btn btn-secondary" onclick="closeProjectModal()">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Publish Project</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Firebase SDK Integration -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyAHczDpNDtuyU50fHuJBibi7lzN45FUzxg",
+            authDomain: "my-project-aedf1.firebaseapp.com",
+            projectId: "my-project-aedf1",
+            storageBucket: "my-project-aedf1.firebasestorage.app",
+            messagingSenderId: "802524733061",
+            appId: "1:802524733061:web:3021a9ae8ad0a22949d3ec",
+            measurementId: "G-NJDRTQ67BR"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        const KHALIDA_EMAIL = "yusifprogramming@gmail.com";
+        let currentUser = null;
+
+        // Monitor Auth State
+        onAuthStateChanged(auth, (user) => {
+            currentUser = user;
+            const userNav = document.getElementById('user-status');
+            const addProjBtn = document.getElementById('add-proj-btn');
+
+            if (user && user.email.toLowerCase() === KHALIDA_EMAIL.toLowerCase()) {
+                userNav.innerHTML = `
+                    <span style="margin-right:10px;">Welcome, <strong>Khalida</strong></span>
+                    <button class="btn btn-secondary" id="logout-btn">Sign Out</button>
+                `;
+                addProjBtn.style.display = "inline-flex";
+                document.getElementById('logout-btn').addEventListener('click', () => signOut(auth));
+            } else {
+                userNav.innerHTML = `<button class="btn btn-primary" onclick="openAuthModal()">Owner Sign In</button>`;
+                addProjBtn.style.display = "none";
+            }
+        });
+
+        // Sync Projects Globally
+        const projectsRef = collection(db, "projects");
+        onSnapshot(projectsRef, (snapshot) => {
+            const grid = document.getElementById('portfolio-grid');
+            grid.innerHTML = '';
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                grid.innerHTML += `
+                    <div class="project-card">
+                        <img src="${data.img}" class="card-preview" alt="${data.title}" onerror="this.src='https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=600&q=80'">
+                        <div class="card-info">
+                            <div>
+                                <h3>${data.title}</h3>
+                                <p>${data.description}</p>
+                            </div>
+                            <div class="card-meta">By ${data.author}</div>
+                        </div>
+                    </div>
+                `;
+            });
+        });
+
+        // Sync Questions Globally
+        const inquiriesRef = collection(db, "inquiries");
+        onSnapshot(inquiriesRef, (snapshot) => {
+            const list = document.getElementById('inquiries-list');
+            list.innerHTML = '';
+            snapshot.forEach((doc) => {
+                const data = doc.data();
+                list.innerHTML += `
+                    <div class="inquiry-box">
+                        <strong>${data.name} asked:</strong>
+                        <p>${data.message}</p>
+                    </div>
+                `;
+            });
+        });
+
+        // Login / Auto-Registration Handler
+        window.handleAuthSubmit = async function(e) {
+            e.preventDefault();
+            const email = document.getElementById('auth-email').value.trim();
+            const pass = document.getElementById('auth-password').value.trim();
+
+            if (email.toLowerCase() !== KHALIDA_EMAIL.toLowerCase()) {
+                alert("Only Khalida's account (yusifprogramming@gmail.com) is permitted to log in and upload projects.");
+                return;
+            }
+
+            try {
+                // First try standard login
+                await signInWithEmailAndPassword(auth, email, pass);
+                closeAuthModal();
+            } catch (err) {
+                // If account does not exist in Firebase Auth yet, automatically register it
+                if (err.code === 'auth/invalid-credential' || err.code === 'auth/user-not-found') {
+                    try {
+                        await createUserWithEmailAndPassword(auth, email, pass);
+                        alert("Account successfully created in Firebase database and logged in!");
+                        closeAuthModal();
+                    } catch (signUpErr) {
+                        alert("Error creating account: " + signUpErr.message);
+                    }
+                } else {
+                    alert("Login failed: " + err.message);
+                }
+            }
+        };
+
+        // Project Submit Handler
+        window.handleProjectSubmit = async function(e) {
+            e.preventDefault();
+            if (!currentUser || currentUser.email.toLowerCase() !== KHALIDA_EMAIL.toLowerCase()) {
+                alert("Unauthorized operation.");
+                return;
+            }
+
+            await addDoc(projectsRef, {
+                title: document.getElementById('proj-title').value,
+                description: document.getElementById('proj-desc').value,
+                img: document.getElementById('proj-url').value,
+                author: "Khalida"
+            });
+            closeProjectModal();
+        };
+
+        // Public Question Submit
+        window.submitPublicInquiry = async function(e) {
+            e.preventDefault();
+            await addDoc(inquiriesRef, {
+                name: document.getElementById('ask-name').value,
+                message: document.getElementById('ask-message').value
+            });
+            document.getElementById('ask-name').value = '';
+            document.getElementById('ask-message').value = '';
+            alert("Question submitted successfully!");
+        };
+
+        window.openAuthModal = function() { document.getElementById('auth-modal').classList.add('active'); };
+        window.closeAuthModal = function() { document.getElementById('auth-modal').classList.remove('active'); };
+        window.openProjectModal = function() { document.getElementById('project-modal').classList.add('active'); };
+        window.closeProjectModal = function() { document.getElementById('project-modal').classList.remove('active'); };
+    </script>
+</body>
+</html>
