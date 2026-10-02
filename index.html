@@ -6,6 +6,8 @@
     <title>Xalida Salahova | Official Live Portfolio</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <style>
         :root {
             --bg-color: #0f172a;
@@ -93,6 +95,7 @@
             border: none;
             display: inline-flex;
             align-items: center;
+            justify-content: center;
         }
 
         .btn-primary { background: var(--accent-gradient); color: #fff; box-shadow: 0 4px 20px rgba(56, 189, 248, 0.3); }
@@ -151,12 +154,68 @@
             border: 1px solid var(--border-color); color: var(--text-primary); outline: none;
         }
         .modal-actions { display: flex; gap: 12px; justify-content: flex-end; margin-top: 20px; }
+
+        /* Animated Top-Center Notification Box */
+        .toast-notification {
+            position: fixed;
+            top: -120px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(30, 41, 59, 0.95);
+            border: 1px solid #38bdf8;
+            box-shadow: 0 10px 30px rgba(56, 189, 248, 0.3);
+            backdrop-filter: blur(16px);
+            border-radius: 16px;
+            padding: 20px 28px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            z-index: 2000;
+            opacity: 0;
+            transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+
+        .toast-notification.show {
+            top: 24px;
+            opacity: 1;
+        }
+
+        .toast-notification.hide {
+            top: -120px;
+            opacity: 0;
+            transition: all 0.6s ease-in-out;
+        }
+
+        .toast-content h4 {
+            color: #38bdf8;
+            font-size: 1rem;
+            margin-bottom: 4px;
+        }
+
+        .toast-content p {
+            font-size: 0.85rem;
+            color: var(--text-secondary);
+        }
+
+        .toast-btn {
+            padding: 8px 18px;
+            font-size: 0.85rem;
+        }
     </style>
 </head>
 <body>
 
     <div class="bg-glow bg-glow-1"></div>
     <div class="bg-glow bg-glow-2"></div>
+
+    <!-- Animated Top-Center Success Box -->
+    <div class="toast-notification" id="toast-box">
+        <div class="toast-content">
+            <h4>Message Sent Successfully!</h4>
+            <p>Your question has been saved and sent to the recipient's inbox.</p>
+        </div>
+        <button class="btn btn-primary toast-btn" onclick="closeToast()">OK</button>
+    </div>
 
     <div class="wrapper">
         <nav>
@@ -184,11 +243,14 @@
         <!-- Public Q&A Board -->
         <section class="inquiry-section">
             <h2 style="margin-bottom: 16px;">Ask Khalida Anything</h2>
-            <p style="color: var(--text-secondary); margin-bottom: 20px;">Send a message directly to <strong>khalidasalahova3@gmail.com</strong> through this public board:</p>
+            <p style="color: var(--text-secondary); margin-bottom: 20px;">Send a message directly through this public board:</p>
             
             <form onsubmit="submitPublicInquiry(event)" style="margin-bottom: 30px;">
                 <div class="form-group">
                     <input type="text" id="ask-name" placeholder="Your Name" required>
+                </div>
+                <div class="form-group">
+                    <input type="email" id="ask-email" placeholder="Your Email Address" required>
                 </div>
                 <div class="form-group">
                     <textarea id="ask-message" rows="3" placeholder="Write your question or request here..." required></textarea>
@@ -254,6 +316,9 @@
         import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
         import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
+        // Initialize EmailJS
+        emailjs.init("YOUR_EMAILJS_PUBLIC_KEY");
+
         const firebaseConfig = {
             apiKey: "AIzaSyAHczDpNDtuyU50fHuJBibi7lzN45FUzxg",
             authDomain: "my-project-aedf1.firebaseapp.com",
@@ -268,7 +333,8 @@
         const auth = getAuth(app);
         const db = getFirestore(app);
 
-        const KHALIDA_EMAIL = "yusifprogramming@gmail.com";
+        const KHALIDA_EMAIL = "khalidasalahova3@gmail.com";
+        const TEST_EMAIL = "yusifprogramming@gmail.com";
         let currentUser = null;
 
         // Monitor Auth State
@@ -335,16 +401,14 @@
             const pass = document.getElementById('auth-password').value.trim();
 
             if (email.toLowerCase() !== KHALIDA_EMAIL.toLowerCase()) {
-                alert("Only Khalida's account (yusifprogramming@gmail.com) is permitted to log in and upload projects.");
+                alert("Only Khalida's account (khalidasalahova3@gmail.com) is permitted to log in and upload projects.");
                 return;
             }
 
             try {
-                // First try standard login
                 await signInWithEmailAndPassword(auth, email, pass);
                 closeAuthModal();
             } catch (err) {
-                // If account does not exist in Firebase Auth yet, automatically register it
                 if (err.code === 'auth/invalid-credential' || err.code === 'auth/user-not-found') {
                     try {
                         await createUserWithEmailAndPassword(auth, email, pass);
@@ -376,16 +440,50 @@
             closeProjectModal();
         };
 
-        // Public Question Submit
+        // Public Question Submit with Dual Email Notification & Animated Toast
         window.submitPublicInquiry = async function(e) {
             e.preventDefault();
+            const name = document.getElementById('ask-name').value;
+            const email = document.getElementById('ask-email').value;
+            const message = document.getElementById('ask-message').value;
+
+            // 1. Save question in Firestore Database
             await addDoc(inquiriesRef, {
-                name: document.getElementById('ask-name').value,
-                message: document.getElementById('ask-message').value
+                name: name,
+                email: email,
+                message: message
             });
+
+            // 2. Send email notification to Khalida's email and your test email
+            const emailParams = {
+                from_name: name,
+                reply_to: email,
+                message: message,
+                to_email: `${KHALIDA_EMAIL}, ${TEST_EMAIL}`
+            };
+
+            emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", emailParams)
+                .catch(err => console.log("Email dispatch status:", err));
+
+            // Reset form fields
             document.getElementById('ask-name').value = '';
+            document.getElementById('ask-email').value = '';
             document.getElementById('ask-message').value = '';
-            alert("Question submitted successfully!");
+
+            // Show animated success toast at top-center
+            showToast();
+        };
+
+        window.showToast = function() {
+            const toast = document.getElementById('toast-box');
+            toast.classList.remove('hide');
+            toast.classList.add('show');
+        };
+
+        window.closeToast = function() {
+            const toast = document.getElementById('toast-box');
+            toast.classList.remove('show');
+            toast.classList.add('hide');
         };
 
         window.openAuthModal = function() { document.getElementById('auth-modal').classList.add('active'); };
