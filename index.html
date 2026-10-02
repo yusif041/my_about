@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Xalida Salahova | Official Live Portfolio</title>
+    <title>Xalida Salahova | Official Live Portfolio | Test</title>
     <!-- Google Fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <!-- EmailJS SDK -->
@@ -310,14 +310,14 @@
         </div>
     </div>
 
-    <!-- Firebase SDK Integration -->
+    <!-- Firebase & EmailJS Integration -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
         import { getFirestore, collection, addDoc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
-        // Initialize EmailJS
-        emailjs.init("YOUR_EMAILJS_PUBLIC_KEY");
+        // Initialize EmailJS with Public Key
+        emailjs.init("DUyqyCFbesBYFk9gs");
 
         const firebaseConfig = {
             apiKey: "AIzaSyAHczDpNDtuyU50fHuJBibi7lzN45FUzxg",
@@ -334,7 +334,6 @@
         const db = getFirestore(app);
 
         const KHALIDA_EMAIL = "khalidasalahova3@gmail.com";
-        const TEST_EMAIL = "yusifprogramming@gmail.com";
         let currentUser = null;
 
         // Monitor Auth State
@@ -443,27 +442,33 @@
         // Public Question Submit with Dual Email Notification & Animated Toast
         window.submitPublicInquiry = async function(e) {
             e.preventDefault();
-            const name = document.getElementById('ask-name').value;
-            const email = document.getElementById('ask-email').value;
-            const message = document.getElementById('ask-message').value;
+            const nameInput = document.getElementById('ask-name').value;
+            const emailInput = document.getElementById('ask-email').value;
+            const messageInput = document.getElementById('ask-message').value;
 
             // 1. Save question in Firestore Database
             await addDoc(inquiriesRef, {
-                name: name,
-                email: email,
-                message: message
+                name: nameInput,
+                email: emailInput,
+                message: messageInput
             });
 
-            // 2. Send email notification to Khalida's email and your test email
+            // 2. Send email notification via EmailJS matching template variables
             const emailParams = {
-                from_name: name,
-                reply_to: email,
-                message: message,
-                to_email: `${KHALIDA_EMAIL}, ${TEST_EMAIL}`
+                name: nameInput,        // Maps to {{name}}
+                email: emailInput,      // Maps to Reply-To {{email}}
+                message: messageInput,  // Maps to {{message}}
+                title: "Portfolio Inquiry" // Maps to {{title}} in Subject
             };
 
-            emailjs.send("YOUR_SERVICE_ID", "YOUR_TEMPLATE_ID", emailParams)
-                .catch(err => console.log("Email dispatch status:", err));
+            emailjs.send("service_qpc6dav", "template_7wg2m8u", emailParams)
+                .then(res => {
+                    console.log("Email sent successfully!", res.status);
+                })
+                .catch(err => {
+                    console.error("EmailJS Error:", err);
+                    alert("Email dispatch failed. Please check browser console (F12).");
+                });
 
             // Reset form fields
             document.getElementById('ask-name').value = '';
