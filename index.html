@@ -85,6 +85,22 @@
             gap: 16px;
         }
 
+        .brand-container {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-logo-img {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 2px solid rgba(56, 189, 248, 0.5);
+            box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
+            background: #ffffff;
+        }
+
         .brand-logo {
             font-size: 1.25rem;
             font-weight: 700;
@@ -222,7 +238,6 @@
         .card-info p { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 12px; }
         .card-meta { font-size: 0.8rem; color: #38bdf8; font-weight: 600; display: flex; justify-content: space-between; align-items: center; }
 
-        /* Delete Button */
         .btn-delete {
             background: rgba(239, 68, 68, 0.15);
             color: #ef4444;
@@ -343,7 +358,12 @@
 
     <div class="wrapper">
         <nav>
-            <div class="brand-logo">Xalida Salahova</div>
+            <div class="brand-container">
+                <!-- Embedded Logo -->
+                <img src="logo.png" alt="Xalida Salahova Logo" class="brand-logo-img">
+                <div class="brand-logo">Xalida Salahova</div>
+            </div>
+            
             <div class="nav-right">
                 <!-- Theme Switcher -->
                 <div class="theme-switcher">
@@ -691,7 +711,6 @@
             }
         }
 
-        // Init theme state
         const savedTheme = localStorage.getItem('portfolio_theme') || 'system';
         applyTheme(savedTheme);
 
