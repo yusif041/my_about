@@ -4,8 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Xalida Salahova | Official Live Portfolio</title>
+    <meta name="description" content="A curated portfolio of UI/UX and graphic design work by Xalida Salahova.">
+    <meta name="theme-color" content="#101114">
     <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     <!-- EmailJS SDK v4 -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
     <script type="text/javascript">
@@ -341,10 +343,268 @@
         .toast-notification.hide { top: -120px; opacity: 0; transition: all 0.6s ease-in-out; }
         .toast-content h4 { color: #38bdf8; font-size: 1rem; margin-bottom: 4px; }
         .toast-content p { font-size: 0.85rem; color: var(--text-secondary); }
+
+        :root {
+            --bg-color: #101114;
+            --card-bg: rgba(27, 29, 34, 0.82);
+            --accent-gradient: linear-gradient(115deg, #c7f36b 0%, #9fe7c4 100%);
+            --text-primary: #f4f3ef;
+            --text-secondary: #a2a3a8;
+            --input-bg: rgba(13, 14, 17, 0.75);
+            --border-color: rgba(255, 255, 255, 0.1);
+            --modal-bg: #1b1d22;
+            --accent: #c7f36b;
+            --surface-raised: #22242a;
+        }
+
+        [data-theme="light"] {
+            --bg-color: #f5f4ef;
+            --card-bg: rgba(255, 255, 255, 0.82);
+            --accent-gradient: linear-gradient(115deg, #7aa62b 0%, #4c9b78 100%);
+            --text-primary: #191a18;
+            --text-secondary: #666861;
+            --input-bg: rgba(242, 241, 235, 0.95);
+            --border-color: rgba(25, 26, 24, 0.12);
+            --modal-bg: #fffefa;
+            --accent: #527c20;
+            --surface-raised: #eeede6;
+        }
+
+        html { scroll-behavior: smooth; scroll-padding-top: 100px; }
+        .scroll-progress { position: fixed; top: 0; left: 0; width: 0; height: 3px; z-index: 1000; background: var(--accent); box-shadow: 0 0 12px color-mix(in srgb, var(--accent) 60%, transparent); }
+
+        body {
+            position: relative;
+            overflow-x: hidden;
+            background-image: radial-gradient(var(--border-color) 0.7px, transparent 0.7px);
+            background-size: 24px 24px;
+            font-family: "DM Sans", sans-serif;
+            letter-spacing: -0.015em;
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: -1;
+            background: linear-gradient(180deg, transparent 65%, var(--bg-color) 100%);
+        }
+
+        .bg-glow {
+            width: 520px;
+            height: 520px;
+            opacity: 0.15;
+            filter: blur(150px);
+            pointer-events: none;
+        }
+
+        .bg-glow-1 { top: -220px; left: -160px; }
+        .bg-glow-2 { bottom: -220px; right: -180px; }
+        .wrapper { width: min(1180px, calc(100% - 48px)); margin: 28px auto 64px; }
+
+        nav {
+            position: sticky;
+            top: 16px;
+            z-index: 50;
+            margin-bottom: 86px;
+            padding: 12px 16px 12px 20px;
+            border-radius: 18px;
+            background: color-mix(in srgb, var(--bg-color) 76%, transparent);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+            animation: nav-arrive 700ms cubic-bezier(.2,.8,.2,1) both;
+        }
+
+        .brand-container { gap: 13px; }
+        .brand-mark { display: grid; width: 40px; height: 40px; place-items: center; border-radius: 13px; background: var(--accent-gradient); color: #161910; font-family: "Space Grotesk", sans-serif; font-size: 0.85rem; font-weight: 700; }
+        .brand-logo-img { width: 40px; height: 40px; }
+        .brand-logo { font-family: "Space Grotesk", sans-serif; font-size: 1.03rem; }
+        .nav-right { gap: 22px; }
+        .nav-links { display: flex; align-items: center; gap: 24px; }
+        .nav-links a {
+            color: var(--text-secondary);
+            font-size: 0.84rem;
+            font-weight: 600;
+            text-decoration: none;
+            transition: color 180ms ease;
+        }
+        .nav-links a:hover { color: var(--text-primary); }
+        .theme-btn, .btn { min-height: 42px; }
+        .theme-btn { padding: 8px 14px; }
+
+        header {
+            position: relative;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(220px, 0.38fr);
+            align-items: end;
+            gap: 48px;
+            margin-bottom: 112px;
+            text-align: left;
+            animation: hero-arrive 850ms 100ms cubic-bezier(.2,.8,.2,1) both;
+        }
+        .hero-copy { max-width: 780px; }
+        .eyebrow, .section-kicker {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            color: var(--accent);
+            font-size: 0.72rem;
+            font-weight: 700;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+        }
+        .eyebrow::before {
+            content: "";
+            width: 7px;
+            height: 7px;
+            border-radius: 50%;
+            background: var(--accent);
+            box-shadow: 0 0 16px var(--accent);
+            animation: pulse-dot 2s infinite;
+        }
+        h1 {
+            max-width: 780px;
+            margin: 20px 0 18px;
+            font-family: "Space Grotesk", sans-serif;
+            font-size: clamp(3.5rem, 8.2vw, 7.2rem);
+            font-weight: 600;
+            line-height: 0.98;
+            letter-spacing: -0.075em;
+            background: none;
+            -webkit-text-fill-color: var(--text-primary);
+        }
+        .hero-accent { color: var(--accent); -webkit-text-fill-color: var(--accent); }
+        .subtitle { max-width: 550px; margin: 0; font-size: 1.05rem; line-height: 1.8; }
+        .hero-aside {
+            padding: 22px 0 5px 24px;
+            border-left: 1px solid var(--border-color);
+            color: var(--text-secondary);
+            font-size: 0.88rem;
+            line-height: 1.8;
+        }
+        .hero-aside strong { display: block; margin-bottom: 8px; color: var(--text-primary); font-size: 1rem; }
+        .hero-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 28px; }
+        .btn { gap: 8px; padding: 10px 20px; }
+        .btn-primary { color: #161910; box-shadow: 0 8px 26px rgba(199, 243, 107, 0.16); }
+        .btn-primary:hover { box-shadow: 0 12px 34px rgba(199, 243, 107, 0.25); }
+        .btn-secondary { background: var(--card-bg); }
+
+        .section-header { margin-bottom: 24px; align-items: end; }
+        .section-title-wrap h2, .inquiry-section h2 {
+            margin-top: 8px;
+            font-family: "Space Grotesk", sans-serif;
+            font-size: clamp(1.8rem, 4vw, 2.65rem);
+            letter-spacing: -0.055em;
+        }
+        .portfolio-grid { grid-template-columns: repeat(auto-fit, minmax(min(100%, 310px), 1fr)); gap: 18px; }
+        .project-card {
+            min-height: 100%;
+            border-radius: 18px;
+            background: var(--card-bg);
+            box-shadow: 0 16px 44px rgba(0, 0, 0, 0.08);
+            animation: card-arrive 650ms cubic-bezier(.2,.8,.2,1);
+            transition: transform 500ms cubic-bezier(.2,.8,.2,1), opacity 500ms ease, border-color 300ms ease, box-shadow 300ms ease;
+        }
+        .project-card:hover { transform: translateY(-7px); border-color: color-mix(in srgb, var(--accent) 50%, transparent); box-shadow: 0 22px 60px rgba(0, 0, 0, 0.2); }
+        .card-preview { height: 250px; transition: transform 700ms cubic-bezier(.2,.8,.2,1); }
+        .project-card:hover .card-preview { transform: scale(1.045); }
+        .card-image-wrap { height: 250px; overflow: hidden; background: var(--surface-raised); }
+        .card-info { padding: 23px; }
+        .card-info h3 { font-family: "Space Grotesk", sans-serif; font-size: 1.25rem; letter-spacing: -0.035em; }
+        .card-info p { line-height: 1.7; }
+        .card-meta { color: var(--accent); }
+        .empty-state, .loading-state {
+            grid-column: 1 / -1;
+            padding: 52px 24px;
+            border: 1px dashed var(--border-color);
+            border-radius: 18px;
+            color: var(--text-secondary);
+            text-align: center;
+        }
+
+        .inquiry-section {
+            display: grid;
+            grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+            gap: 36px;
+            margin-top: 110px;
+            padding: clamp(24px, 5vw, 56px);
+            border-radius: 22px;
+            box-shadow: 0 24px 70px rgba(0, 0, 0, 0.1);
+        }
+        .inquiry-intro p { max-width: 340px; color: var(--text-secondary); line-height: 1.8; }
+        .inquiry-intro .contact-note { margin-top: 28px; color: var(--accent); font-size: 0.84rem; font-weight: 600; }
+        #form { margin: 0 !important; }
+        .field { margin-bottom: 14px; }
+        .field label { font-size: 0.78rem; font-weight: 600; }
+        .field input, .field textarea { padding: 14px 16px; border-radius: 12px; transition: border-color 180ms ease, box-shadow 180ms ease; }
+        .field input:focus, .field textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 16%, transparent); }
+        input[type="submit"] { min-height: 46px; color: #161910; }
+        .admin-inbox { grid-column: 1 / -1; padding-top: 28px; border-top: 1px solid var(--border-color); }
+        .admin-inbox h3 { margin-bottom: 18px; font-family: "Space Grotesk", sans-serif; }
+        .inquiry-box { border-radius: 12px; }
+        .inquiry-box strong { color: var(--accent); }
+        .inquiry-meta { display: block; margin-top: 8px; color: var(--text-secondary); font-size: 0.78rem; }
+        footer {
+            display: flex;
+            justify-content: space-between;
+            gap: 16px;
+            padding: 28px 0 8px;
+            color: var(--text-secondary);
+            font-size: 0.82rem;
+        }
+        footer a { color: var(--text-primary); text-decoration-color: var(--accent); text-underline-offset: 4px; }
+        .modal-box { box-shadow: 0 30px 100px rgba(0, 0, 0, 0.3); animation: modal-arrive 300ms cubic-bezier(.2,.8,.2,1) both; }
+        .toast-notification { border-color: var(--accent); }
+        .toast-content h4 { color: var(--accent); }
+
+        .reveal { opacity: 1; transform: none; animation: section-arrive 700ms cubic-bezier(.2,.8,.2,1); }
+
+        @keyframes nav-arrive { from { transform: translateY(-14px); } to { transform: translateY(0); } }
+        @keyframes hero-arrive { from { transform: translateY(24px); } to { transform: translateY(0); } }
+        @keyframes modal-arrive { from { opacity: 0; transform: translateY(12px) scale(.98); } to { opacity: 1; transform: translateY(0) scale(1); } }
+        @keyframes section-arrive { from { transform: translateY(24px); } to { transform: translateY(0); } }
+        @keyframes card-arrive { from { transform: translateY(18px); } to { transform: translateY(0); } }
+        @keyframes pulse-dot { 50% { box-shadow: 0 0 0 7px color-mix(in srgb, var(--accent) 12%, transparent), 0 0 18px var(--accent); } }
+
+        @media (max-width: 760px) {
+            .wrapper { width: min(100% - 32px, 600px); margin-top: 16px; }
+            nav { top: 8px; margin-bottom: 60px; padding: 10px 12px; }
+            .nav-links { display: none; }
+            .nav-right { gap: 10px; }
+            .brand-logo { font-size: 0.9rem; }
+            .brand-logo-img { width: 35px; height: 35px; }
+            .theme-btn { padding: 8px 10px; }
+            #user-status .btn { padding: 9px 13px; font-size: 0.78rem; }
+            header { grid-template-columns: 1fr; gap: 26px; margin-bottom: 76px; }
+            h1 { font-size: clamp(3.3rem, 13vw, 5rem); }
+            .hero-aside { max-width: 440px; padding: 0 0 0 18px; }
+            .section-header { align-items: start; gap: 18px; }
+            .inquiry-section { grid-template-columns: 1fr; gap: 28px; margin-top: 76px; }
+            footer { flex-direction: column; }
+        }
+
+        @media (max-width: 440px) {
+            .wrapper { width: calc(100% - 24px); }
+            .brand-container { gap: 8px; }
+            .brand-logo { max-width: 120px; font-size: 0.8rem; }
+            .theme-btn { font-size: 0; gap: 0; }
+            .theme-btn #theme-icon { font-size: 1rem; }
+            .section-header { flex-direction: column; align-items: stretch; }
+            .section-header > .btn { align-self: flex-start; }
+            .portfolio-grid { grid-template-columns: 1fr; }
+            .modal-box { width: calc(100% - 24px); padding: 24px; }
+            .toast-notification { width: calc(100% - 24px); padding: 16px; gap: 12px; }
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }
+            .reveal, .project-card { opacity: 1; transform: none; }
+        }
     </style>
 </head>
 <body>
 
+    <div class="scroll-progress" id="scroll-progress" aria-hidden="true"></div>
     <div class="bg-glow bg-glow-1"></div>
     <div class="bg-glow bg-glow-2"></div>
 
@@ -356,15 +616,18 @@
         <button class="btn btn-primary" style="padding: 8px 18px;" onclick="closeToast()">OK</button>
     </div>
 
-    <div class="wrapper">
+    <div class="wrapper" id="top">
         <nav>
             <div class="brand-container">
-                <!-- Embedded Logo -->
-                <img src="logo.png" alt="Xalida Salahova Logo" class="brand-logo-img">
+                <div class="brand-mark" aria-hidden="true">XS</div>
                 <div class="brand-logo">Xalida Salahova</div>
             </div>
             
             <div class="nav-right">
+                <div class="nav-links" aria-label="Main navigation">
+                    <a href="#work">Work</a>
+                    <a href="#contact">Contact</a>
+                </div>
                 <!-- Theme Switcher -->
                 <div class="theme-switcher">
                     <button class="theme-btn" onclick="toggleThemeDropdown()">
@@ -384,32 +647,50 @@
         </nav>
 
         <header>
-            <h1>UI/UX & Graphic Portfolio</h1>
-            <p class="subtitle">Official online showcase for Xalida Salahova. View creative work or submit questions directly below.</p>
+            <div class="hero-copy">
+                <span class="eyebrow">Independent designer · Available for projects</span>
+                <h1>Designing digital experiences with <span class="hero-accent">purpose.</span></h1>
+                <p class="subtitle">I’m Xalida Salahova — a UI/UX and graphic designer shaping thoughtful brands and intuitive digital products.</p>
+                <div class="hero-actions">
+                    <a class="btn btn-primary" href="#work">Explore my work <span aria-hidden="true">↘</span></a>
+                    <a class="btn btn-secondary" href="#contact">Let’s talk</a>
+                </div>
+            </div>
+            <aside class="hero-aside">
+                <strong>Thoughtful by design.</strong>
+                From the first sketch to the final interaction, I bring clarity, character, and care to every detail.
+            </aside>
         </header>
 
-        <section>
+        <section id="work" class="reveal">
             <div class="section-header">
-                <h2>Featured Projects</h2>
+                <div class="section-title-wrap">
+                    <span class="section-kicker">Selected work</span>
+                    <h2>Featured projects</h2>
+                </div>
                 <button class="btn btn-primary" id="add-proj-btn" style="display: none;" onclick="openProjectModal()">+ Add New Project</button>
             </div>
             <div class="portfolio-grid" id="portfolio-grid">
-                <!-- Projects load live from Firebase -->
+                <div class="loading-state">Loading projects from the portfolio database…</div>
             </div>
         </section>
 
-        <section class="inquiry-section">
-            <h2 style="margin-bottom: 16px;">Ask Khalida Anything</h2>
-            <p style="color: var(--text-secondary); margin-bottom: 24px;">Send a message directly through this form:</p>
+        <section class="inquiry-section reveal" id="contact">
+            <div class="inquiry-intro">
+                <span class="section-kicker">Have a project in mind?</span>
+                <h2>Let’s make something meaningful.</h2>
+                <p>Tell me a little about what you’re working on. I’ll get back to you as soon as I can.</p>
+                <p class="contact-note">Your message goes straight to my inbox.</p>
+            </div>
 
-            <form id="form" style="margin-bottom: 30px;">
+            <form id="form">
                 <div class="field">
                     <label for="title">Title / Subject</label>
-                    <input type="text" name="title" id="title" value="Portfolio Inquiry" required>
+                    <input type="text" name="title" id="title" value="Portfolio Inquiry" maxlength="120" required>
                 </div>
                 <div class="field">
                     <label for="name">Your Name</label>
-                    <input type="text" name="name" id="name" placeholder="John Doe" required>
+                    <input type="text" name="name" id="name" placeholder="John Doe" maxlength="120" required>
                 </div>
                 <div class="field" style="display: none;">
                     <label for="time">Time</label>
@@ -417,20 +698,26 @@
                 </div>
                 <div class="field">
                     <label for="email">Your Email Address</label>
-                    <input type="email" name="email" id="email" placeholder="example@gmail.com" required>
+                    <input type="email" name="email" id="email" placeholder="example@gmail.com" maxlength="254" required>
                 </div>
                 <div class="field">
                     <label for="message">Message</label>
-                    <textarea name="message" id="message" rows="3" placeholder="Write your question here..." required></textarea>
+                    <textarea name="message" id="message" rows="4" maxlength="4000" placeholder="Write your question here..." required></textarea>
                 </div>
 
                 <input type="submit" id="button" value="Send Email">
             </form>
 
-            <div id="inquiries-list">
-                <!-- Live Inquiries -->
+            <div class="admin-inbox" id="admin-inbox" hidden>
+                <h3>Private inquiry inbox</h3>
+                <div id="inquiries-list" aria-live="polite"></div>
             </div>
         </section>
+
+        <footer>
+            <span>© <span id="current-year"></span> Xalida Salahova. Designed with intention.</span>
+            <a href="#top" aria-label="Back to top">Back to top ↑</a>
+        </footer>
     </div>
 
     <div class="modal-overlay" id="auth-modal">
@@ -459,11 +746,11 @@
             <form onsubmit="handleProjectSubmit(event)">
                 <div class="field">
                     <label>Project Title</label>
-                    <input type="text" id="proj-title" placeholder="e.g. Modern Mobile UI" required>
+                    <input type="text" id="proj-title" maxlength="120" placeholder="e.g. Modern Mobile UI" required>
                 </div>
                 <div class="field">
                     <label>Description</label>
-                    <textarea id="proj-desc" rows="3" placeholder="Project details..." required></textarea>
+                    <textarea id="proj-desc" maxlength="2000" rows="3" placeholder="Project details..." required></textarea>
                 </div>
                 <div class="field">
                     <label>Image Direct Link / URL</label>
@@ -480,7 +767,7 @@
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
         import { getAuth, signInWithEmailAndPassword, createUserWithEmailAndPassword, signOut, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
-        import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+        import { getFirestore, collection, addDoc, deleteDoc, doc, onSnapshot, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
 
         const firebaseConfig = {
             apiKey: "AIzaSyAHczDpNDtuyU50fHuJBibi7lzN45FUzxg",
@@ -498,13 +785,28 @@
 
         const KHALIDA_EMAIL = "khalidasalahova3@gmail.com";
         let currentUser = null;
+        let unsubscribeInquiries = null;
+        let projectsLoaded = false;
+        const grid = document.getElementById('portfolio-grid');
+        const inquiriesRef = collection(db, "inquiries");
+        const projectsRef = collection(db, "projects");
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+        const progress = document.getElementById('scroll-progress');
+        const updateScrollProgress = () => {
+            const scrollable = document.documentElement.scrollHeight - window.innerHeight;
+            const percent = scrollable > 0 ? (window.scrollY / scrollable) * 100 : 0;
+            progress.style.width = `${percent}%`;
+        };
+        window.addEventListener('scroll', updateScrollProgress, { passive: true });
+        updateScrollProgress();
 
         onAuthStateChanged(auth, (user) => {
             currentUser = user;
             const userNav = document.getElementById('user-status');
             const addProjBtn = document.getElementById('add-proj-btn');
+            const isAdmin = user?.email?.toLowerCase() === KHALIDA_EMAIL.toLowerCase();
 
-            if (user && user.email.toLowerCase() === KHALIDA_EMAIL.toLowerCase()) {
+            if (isAdmin) {
                 userNav.innerHTML = `
                     <span style="margin-right:10px;">Welcome, <strong>Khalida</strong></span>
                     <button class="btn btn-secondary" id="logout-btn">Sign Out</button>
@@ -515,48 +817,119 @@
                 userNav.innerHTML = `<button class="btn btn-primary" onclick="openAuthModal()">Owner Sign In</button>`;
                 addProjBtn.style.display = "none";
             }
+            document.getElementById('admin-inbox').hidden = !isAdmin;
+            if (unsubscribeInquiries) {
+                unsubscribeInquiries();
+                unsubscribeInquiries = null;
+            }
+            if (isAdmin) {
+                unsubscribeInquiries = onSnapshot(inquiriesRef, (snapshot) => {
+                    renderInquiries(snapshot);
+                }, (error) => {
+                    console.error("Inquiry inbox sync error:", error);
+                    document.getElementById('inquiries-list').textContent = "Unable to load the private inquiry inbox.";
+                });
+            }
             renderProjects();
         });
 
         let cachedProjects = [];
-        const projectsRef = collection(db, "projects");
 
         onSnapshot(projectsRef, (snapshot) => {
+            projectsLoaded = true;
             cachedProjects = [];
             snapshot.forEach((d) => {
                 cachedProjects.push({ id: d.id, ...d.data() });
             });
             renderProjects();
+        }, (error) => {
+            console.error("Project database sync error:", error);
+            grid.innerHTML = '<div class="empty-state">Projects could not be loaded. Please try again later.</div>';
         });
 
         function renderProjects() {
-            const grid = document.getElementById('portfolio-grid');
             grid.innerHTML = '';
-            const isAdmin = currentUser && currentUser.email.toLowerCase() === KHALIDA_EMAIL.toLowerCase();
+            if (!projectsLoaded) {
+                grid.innerHTML = '<div class="loading-state">Loading projects from the portfolio database…</div>';
+                return;
+            }
+            if (cachedProjects.length === 0) {
+                grid.innerHTML = '<div class="empty-state">New work is on the way. Check back soon.</div>';
+                return;
+            }
+            const isAdmin = currentUser?.email?.toLowerCase() === KHALIDA_EMAIL.toLowerCase();
 
-            cachedProjects.forEach((data) => {
-                const deleteBtnHtml = isAdmin ? `<button class="btn-delete" onclick="removeProject('${data.id}')">🗑️ Delete</button>` : '';
-                
-                grid.innerHTML += `
-                    <div class="project-card">
-                        <img src="${data.img}" class="card-preview" alt="${data.title}" onerror="this.src='https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=600&q=80'">
-                        <div class="card-info">
-                            <div>
-                                <h3>${data.title}</h3>
-                                <p>${data.description}</p>
-                            </div>
-                            <div class="card-meta">
-                                <span>By ${data.author}</span>
-                                ${deleteBtnHtml}
-                            </div>
-                        </div>
-                    </div>
-                `;
+            cachedProjects.forEach((data, index) => {
+                const card = document.createElement('article');
+                card.className = 'project-card';
+                card.style.animationDelay = `${Math.min(index % 3, 2) * 90}ms`;
+
+                const imageWrap = document.createElement('div');
+                imageWrap.className = 'card-image-wrap';
+                const image = document.createElement('img');
+                image.className = 'card-preview';
+                image.alt = typeof data.title === 'string' ? data.title : 'Portfolio project';
+                const imageUrl = typeof data.img === 'string' ? data.img : '';
+                image.src = /^https?:\/\//i.test(imageUrl) ? imageUrl : 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=900&q=80';
+                image.onerror = () => {
+                    image.onerror = null;
+                    image.src = 'https://images.unsplash.com/photo-1579783902614-a3fb3927b675?auto=format&fit=crop&w=900&q=80';
+                };
+                imageWrap.append(image);
+
+                const info = document.createElement('div');
+                info.className = 'card-info';
+                const descriptionWrap = document.createElement('div');
+                const title = document.createElement('h3');
+                title.textContent = typeof data.title === 'string' ? data.title : 'Untitled project';
+                const description = document.createElement('p');
+                description.textContent = typeof data.description === 'string' ? data.description : '';
+                descriptionWrap.append(title, description);
+
+                const meta = document.createElement('div');
+                meta.className = 'card-meta';
+                const author = document.createElement('span');
+                author.textContent = `By ${typeof data.author === 'string' ? data.author : 'Xalida'}`;
+                meta.append(author);
+                if (isAdmin) {
+                    const deleteButton = document.createElement('button');
+                    deleteButton.className = 'btn-delete';
+                    deleteButton.type = 'button';
+                    deleteButton.textContent = 'Delete';
+                    deleteButton.addEventListener('click', () => window.removeProject(data.id));
+                    meta.append(deleteButton);
+                }
+                info.append(descriptionWrap, meta);
+                card.append(imageWrap, info);
+                grid.append(card);
+            });
+        }
+
+        function renderInquiries(snapshot) {
+            const list = document.getElementById('inquiries-list');
+            list.replaceChildren();
+            if (snapshot.empty) {
+                list.textContent = "No inquiries yet. New messages will appear here.";
+                return;
+            }
+            snapshot.forEach((inquiryDoc) => {
+                const data = inquiryDoc.data();
+                const box = document.createElement('article');
+                box.className = 'inquiry-box';
+                const heading = document.createElement('strong');
+                heading.textContent = `${typeof data.name === 'string' ? data.name : 'A visitor'} asked: ${typeof data.title === 'string' ? data.title : 'Portfolio inquiry'}`;
+                const message = document.createElement('p');
+                message.textContent = typeof data.message === 'string' ? data.message : '';
+                const email = document.createElement('span');
+                email.className = 'inquiry-meta';
+                email.textContent = typeof data.email === 'string' ? data.email : '';
+                box.append(heading, message, email);
+                list.append(box);
             });
         }
 
         window.removeProject = async function(id) {
-            if (!currentUser || currentUser.email.toLowerCase() !== KHALIDA_EMAIL.toLowerCase()) {
+            if (!currentUser || currentUser.email?.toLowerCase() !== KHALIDA_EMAIL.toLowerCase()) {
                 alert("Unauthorized");
                 return;
             }
@@ -571,51 +944,53 @@
             }
         };
 
-        const inquiriesRef = collection(db, "inquiries");
-        onSnapshot(inquiriesRef, (snapshot) => {
-            const list = document.getElementById('inquiries-list');
-            list.innerHTML = '';
-            snapshot.forEach((doc) => {
-                const data = doc.data();
-                list.innerHTML += `
-                    <div class="inquiry-box">
-                        <strong>${data.name} asked:</strong>
-                        <p>${data.message}</p>
-                    </div>
-                `;
-            });
-        });
-
         const btn = document.getElementById('button');
-        document.getElementById('form').addEventListener('submit', function(event) {
+        document.getElementById('form').addEventListener('submit', async function(event) {
             event.preventDefault();
+            const title = document.getElementById('title').value.trim();
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const message = document.getElementById('message').value.trim();
+            if (!title || !name || !email || !message) {
+                showToast("Please complete the form", "Add a subject, your name, a valid email, and a message.");
+                return;
+            }
             btn.value = 'Sending...';
+            btn.disabled = true;
             document.getElementById('time').value = new Date().toLocaleString();
-
-            const serviceID = 'default_service';
-            const templateID = 'template_7wg2m8u';
-
-            addDoc(inquiriesRef, {
-                name: document.getElementById('name').value,
-                email: document.getElementById('email').value,
-                message: document.getElementById('message').value
-            }).catch(e => console.error("Inquiry save error:", e));
-
-            emailjs.sendForm(serviceID, templateID, this)
-                .then(() => {
-                    btn.value = 'Send Email';
-                    showToast("Message Sent Successfully!", "Your inquiry has been saved and sent.");
-                    document.getElementById('form').reset();
-                }, (err) => {
-                    btn.value = 'Send Email';
-                    alert("Email error: " + JSON.stringify(err));
+            try {
+                await addDoc(inquiriesRef, {
+                    title,
+                    name,
+                    email,
+                    message,
+                    createdAt: serverTimestamp()
                 });
+            } catch (error) {
+                console.error("Inquiry save error:", error);
+                showToast("Message not saved", "The portfolio database could not save your message. Please try again.");
+                btn.value = 'Send Email';
+                btn.disabled = false;
+                return;
+            }
+
+            try {
+                await emailjs.sendForm('default_service', 'template_7wg2m8u', this);
+                showToast("Message sent!", "Your inquiry has been saved and sent.");
+                this.reset();
+            } catch (error) {
+                console.error("Inquiry email error:", error);
+                showToast("Message saved", "Your inquiry is in the portfolio inbox, but the email notification could not be sent.");
+            } finally {
+                btn.value = 'Send Email';
+                btn.disabled = false;
+            }
         });
 
         window.handleAuthSubmit = async function(e) {
             e.preventDefault();
             const email = document.getElementById('auth-email').value.trim();
-            const pass = document.getElementById('auth-password').value.trim();
+            const pass = document.getElementById('auth-password').value;
 
             if (email.toLowerCase() !== KHALIDA_EMAIL.toLowerCase()) {
                 alert("Only Khalida's account is permitted.");
@@ -644,14 +1019,22 @@
             e.preventDefault();
             const submitBtn = document.getElementById('proj-submit-btn');
             
-            if (!currentUser || currentUser.email.toLowerCase() !== KHALIDA_EMAIL.toLowerCase()) {
+            if (!currentUser || currentUser.email?.toLowerCase() !== KHALIDA_EMAIL.toLowerCase()) {
                 alert("Please log in as Khalida first before publishing!");
                 return;
             }
 
-            const title = document.getElementById('proj-title').value;
-            const description = document.getElementById('proj-desc').value;
+            const title = document.getElementById('proj-title').value.trim();
+            const description = document.getElementById('proj-desc').value.trim();
             const img = document.getElementById('proj-url').value;
+            if (!title || !description) {
+                alert("Please add a project title and description.");
+                return;
+            }
+            if (!/^https:\/\//i.test(img)) {
+                alert("Please use a secure HTTPS image URL.");
+                return;
+            }
 
             submitBtn.innerText = "Publishing...";
 
@@ -661,7 +1044,7 @@
                     description: description,
                     img: img,
                     author: "Khalida",
-                    createdAt: new Date()
+                    createdAt: serverTimestamp()
                 });
                 
                 submitBtn.innerText = "Publish Project";
